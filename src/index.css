@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply font-serif;
+  @apply bg-dark-400 font-serif text-base font-bold leading-none text-dark-100 sm:text-lg;
+}
+svg {
+  fill: currentColor;
 }
