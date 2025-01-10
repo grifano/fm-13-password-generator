@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Checkbox from './Checkbox';
 import Button from './Button';
+import StrengthLevel from './StrengthLevel';
 
 function App() {
   const [isEmpty, setIsEmpty] = useState(true);
@@ -8,7 +9,7 @@ function App() {
   const [hasUpperCase, setHasUpperCase] = useState(true);
   const [hasLowerCase, setHasLowerCase] = useState(true);
   const [hasNumbers, setHasNumbers] = useState(true);
-  const [hasSymbols, setHasSymbols] = useState(true);
+  const [hasSymbols, setHasSymbols] = useState(false);
 
   const handleUpperCaseChange = e => {
     setHasUpperCase(!hasUpperCase);
@@ -44,6 +45,9 @@ function App() {
   const getPassword = () => {
     console.log('Generate the password');
   };
+
+  // Steangth Level Object
+  const strengthLevel = [hasUpperCase, hasLowerCase, hasNumbers, hasSymbols];
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
@@ -131,10 +135,8 @@ function App() {
             </li>
           </ul>
           {/* - Strength Info: */}
-          <div className="flex items-center justify-between bg-dark-400 px-8 py-5">
-            <p className="text-base text-dark-200 sm:text-lg">STRENGTH</p>
-            <p className="text-lg">MEDIUM</p>
-          </div>
+          <StrengthLevel strengthLevel={strengthLevel} />
+
           {/* - GENERATE BTN: */}
           <Button
             label="Generate"
