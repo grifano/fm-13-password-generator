@@ -136,7 +136,7 @@ function App() {
             className="shrink-0 p-4 sm:p-7 sm:transition-[filter] sm:hover:saturate-0"
             onClick={handleCopyClick}
           >
-            <img src="/public/icon-copy.svg" alt="copy icon" />
+            <img src="/images/icon-copy.svg" alt="copy icon" />
           </button>
         </div>
         {/* Settings Box */}

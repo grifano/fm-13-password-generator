@@ -23,7 +23,7 @@ const Checkbox: FC<Checkbox> = ({ value, onChange, label, id }) => {
         <img
           width={14}
           height={14}
-          src="/public/icon-check.svg"
+          src="/images/icon-check.svg"
           alt="check icon"
           className="absolute left-[4px] top-[6px] object-contain opacity-0 transition-opacity peer-checked:opacity-100 sm:top-[9px]"
         />

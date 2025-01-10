@@ -16,7 +16,7 @@ const Button: FC<Button> = ({ label, onClick, icon }) => {
       {label}
       {icon && (
         <svg width={12} hanging={12}>
-          <use href={`/public/icons.svg#${icon}`}></use>
+          <use href={`/images/icons.svg#${icon}`}></use>
         </svg>
       )}
     </button>

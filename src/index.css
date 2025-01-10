@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('../public/fonts/JetBrains\ Mono\ Variable\ Font.woff')
+  src: url('/fonts/JetBrains\ Mono\ Variable\ Font.woff')
     format('woff2-variations');
-  src: url('../public/fonts/JetBrains\ Mono\ Variable\ Font.woff')
-    format('woff2') tech('variations');
+  src: url('/fonts/JetBrains\ Mono\ Variable\ Font.woff') format('woff2')
+    tech('variations');
   font-weight: 100 1000;
   font-stretch: 25% 151%;
 }
