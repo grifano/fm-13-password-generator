@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Checkbox from './Checkbox';
 import Button from './Button';
 import StrengthLevel from './StrengthLevel';
@@ -15,7 +15,7 @@ function App() {
   const [hasSymbols, setHasSymbols] = useState(false);
   const [isLongEnough, setIsLongEnough] = useState(false);
 
-  const strengthLevel = [
+  const strengthLevel: boolean[] = [
     hasUpperCase,
     hasLowerCase,
     hasNumbers,
@@ -23,25 +23,21 @@ function App() {
     isLongEnough,
   ];
 
-  const handleUpperCaseChange = e => {
+  const handleUpperCaseChange = () => {
     setHasUpperCase(!hasUpperCase);
-    console.log(e.target.checked);
   };
-  const handleLowerCaseChange = e => {
+  const handleLowerCaseChange = () => {
     setHasLowerCase(!hasLowerCase);
-    console.log(e.target.checked);
   };
-  const handleNumbersChange = e => {
+  const handleNumbersChange = () => {
     setHasNumbers(!hasNumbers);
-    console.log(e.target.checked);
   };
-  const handleSymbolsChange = e => {
+  const handleSymbolsChange = () => {
     setHasSymbols(!hasSymbols);
-    console.log(e.target.checked);
   };
-  const handleLengthChange = e => {
-    const newValue = e.target.value;
-    setLength(newValue);
+  const handleLengthChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue: string = e.target.value;
+    setLength(Number(newValue));
   };
 
   // CalcStrength

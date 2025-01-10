@@ -1,4 +1,13 @@
-const Checkbox = ({ value, onChange, label, id }) => {
+import { ChangeEvent, FC } from 'react';
+
+type Checkbox = {
+  value: boolean;
+  label: string;
+  id: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Checkbox: FC<Checkbox> = ({ value, onChange, label, id }) => {
   return (
     <div className="flex items-center gap-4">
       <label htmlFor={id} className="relative flex items-center gap-2">

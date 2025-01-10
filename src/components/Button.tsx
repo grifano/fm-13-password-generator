@@ -1,4 +1,12 @@
-const Button = ({ label, onClick, icon }) => {
+import { FC } from 'react';
+
+type Button = {
+  label: string;
+  icon?: string;
+  onClick: () => void;
+};
+
+const Button: FC<Button> = ({ label, onClick, icon }) => {
   return (
     <button
       type="button"
