@@ -2,10 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 import Checkbox from './Checkbox';
 import Button from './Button';
 import StrengthLevel from './StrengthLevel';
+import characterSets from '../constants/characterSets';
 
 function App() {
+  const [password, setPassword] = useState('P4$5W0rD!');
   const [isEmpty, setIsEmpty] = useState(true);
-  const [length, setLength] = useState('10');
+  const [length, setLength] = useState(10);
   const [hasUpperCase, setHasUpperCase] = useState(true);
   const [hasLowerCase, setHasLowerCase] = useState(true);
   const [hasNumbers, setHasNumbers] = useState(true);
@@ -43,10 +45,24 @@ function App() {
 
   // Main password generation function
   const getPassword = () => {
-    console.log('Generate the password');
+    const passwordArray = Array.from({ length }, () =>
+      getRandomCharacter(characterSets.LettersLowerCase)
+    );
+    const passwordString = passwordArray.join('');
+
+    setPassword(passwordString);
+    setIsEmpty(false);
   };
 
-  // Steangth Level Object
+  // Get random character
+  function getRandomCharacter(array: string[]): string {
+    const arrayLength = array.length - 1;
+    const randomIndex = Math.floor(Math.random() * arrayLength);
+
+    return array[randomIndex];
+  }
+
+  // Strength Level Object
   const strengthLevel = [hasUpperCase, hasLowerCase, hasNumbers, hasSymbols];
 
   return (
@@ -61,17 +77,17 @@ function App() {
           <p
             className={`${
               isEmpty && 'opacity-25'
-            } text-2xl font-bold leading-none sm:text-[2rem]`}
+            } overflow-auto text-2xl font-bold leading-none sm:text-[2rem]`}
             id="password-result"
           >
-            P4$5W0rD!
+            {password}
           </p>
           <button
             type="button"
-            className="p-4 sm:p-7 sm:transition-[filter] sm:hover:saturate-0"
+            className="shrink-0 p-4 sm:p-7 sm:transition-[filter] sm:hover:saturate-0"
             onClick={handleCopyClick}
           >
-            <img src="/public/icon-copy.svg" alt="" />
+            <img src="/public/icon-copy.svg" alt="copy icon" />
           </button>
         </div>
         {/* Settings Box */}
