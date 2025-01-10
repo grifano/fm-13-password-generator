@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from './Checkbox';
 import Button from './Button';
 import StrengthLevel from './StrengthLevel';
 import characterSets from '../constants/characterSets';
+import { toast } from 'react-toastify';
 
 function App() {
   const [password, setPassword] = useState('P4$5W0rD!');
@@ -12,6 +13,15 @@ function App() {
   const [hasLowerCase, setHasLowerCase] = useState(true);
   const [hasNumbers, setHasNumbers] = useState(true);
   const [hasSymbols, setHasSymbols] = useState(false);
+  const [isLongEnough, setIsLongEnough] = useState(false);
+
+  const strengthLevel = [
+    hasUpperCase,
+    hasLowerCase,
+    hasNumbers,
+    hasSymbols,
+    isLongEnough,
+  ];
 
   const handleUpperCaseChange = e => {
     setHasUpperCase(!hasUpperCase);
@@ -35,35 +45,78 @@ function App() {
   };
 
   // CalcStrength
-  const calcStrength = () => {
-    console.log('Calc Strength');
-  };
+  useEffect(() => {
+    length >= 8 ? setIsLongEnough(true) : setIsLongEnough(false);
+  }, [length]);
+
   // handleCopy
   const handleCopyClick = () => {
-    console.log('Copied!');
+    if (navigator.clipboard && password) {
+      navigator.clipboard
+        .writeText(password)
+        .then(() => {
+          console.log('Password copied to clipboard!');
+          toast.success('Password copied to clipboard!', {
+            className: 'toast-body toast-success toast-fixes',
+          });
+        })
+        .catch(err => {
+          console.error('Failed to copy password:', err);
+          toast.error('Failed to copy password.', {
+            className: 'toast-body toast-error toast-fixes',
+          });
+        });
+    } else {
+      toast.error('Clipboard API is not supported or password is empty.', {
+        className: 'toast-body toast-error toast-fixes',
+      });
+    }
   };
 
   // Main password generation function
   const getPassword = () => {
-    const passwordArray = Array.from({ length }, () =>
-      getRandomCharacter(characterSets.LettersLowerCase)
-    );
-    const passwordString = passwordArray.join('');
+    // Get password
+    const passwordArray = Array.from({ length }, () => {
+      const arrayFunctions = [
+        getRandomCharacter(
+          hasLowerCase ? characterSets.LettersLowerCase : ['']
+        ),
+        getRandomCharacter(
+          hasUpperCase ? characterSets.LettersUpperCase : ['']
+        ),
+        getRandomCharacter(hasNumbers ? characterSets.Numbers : ['']),
+        getRandomCharacter(hasSymbols ? characterSets.Symbols : ['']),
+      ];
+      let passwordInner = '';
 
-    setPassword(passwordString);
+      for (let index = 0; index < arrayFunctions.length; index++) {
+        const element =
+          arrayFunctions[Math.floor(Math.random() * arrayFunctions.length)];
+        passwordInner += element;
+      }
+
+      return passwordInner;
+    });
+
+    const passwordString = passwordArray.join('');
+    const sliceStart = Math.floor(Math.random() * passwordArray.length);
+    const sliceEnd = sliceStart + passwordArray.length;
+
+    setPassword(passwordString.slice(sliceStart, sliceEnd));
     setIsEmpty(false);
   };
 
   // Get random character
-  function getRandomCharacter(array: string[]): string {
-    const arrayLength = array.length - 1;
-    const randomIndex = Math.floor(Math.random() * arrayLength);
+  function getRandomCharacter(array?: string[]): string {
+    if (array !== undefined && array.length > 0) {
+      const arrayLength = array.length - 1;
+      const randomIndex = Math.floor(Math.random() * arrayLength);
 
-    return array[randomIndex];
+      return array[randomIndex];
+    } else {
+      return '';
+    }
   }
-
-  // Strength Level Object
-  const strengthLevel = [hasUpperCase, hasLowerCase, hasNumbers, hasSymbols];
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">

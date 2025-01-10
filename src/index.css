@@ -18,3 +18,32 @@ body {
 svg {
   fill: currentColor;
 }
+
+/* Setup toast styles */
+:root {
+  --toastify-color-success: #a4ffaf;
+}
+.toast-fixes {
+  button {
+    color: inherit;
+    opacity: 1;
+  }
+  svg {
+    fill: currentColor;
+  }
+}
+
+@layer utilities {
+  .toast-body {
+    @apply bg-dark-300 font-mono shadow-lg;
+  }
+  .toast-success {
+    @apply text-accent-green;
+  }
+  .toast-error {
+    @apply text-accent-red;
+  }
+  .toast-warning {
+    @apply text-accent-yellow;
+  }
+}
