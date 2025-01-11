@@ -54,11 +54,13 @@ Your users should be able to:
 
 ### Links
 
-- Solution URL: [FrontendMentor Solution Hub]([👉 ADD LINK!])
-- Live Site URL: [Live Preview]([👉 ADD LINK!])
+- Solution URL:
+  [FrontendMentor Solution Hub](https://www.frontendmentor.io/solutions/password-generator-webapp-react-typescript-cN1GcY0ks9)
+- Live Site URL:
+  [Live Preview at Vercel](https://fm-13-password-generator.vercel.app/)
 
 ## Author
 
 - Frontend Mentor -
-  [Web Development](https://www.frontendmentor.io/profile/grifano)
+  [Grifano Serhii Orlenko profile](https://www.frontendmentor.io/profile/grifano)
 - LinkedIn - [Serhii Orlenko](https://www.linkedin.com/in/grifano/)
