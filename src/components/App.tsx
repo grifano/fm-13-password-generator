@@ -5,11 +5,12 @@ import StrengthLevel from './StrengthLevel';
 import characterSets from '../constants/characterSets';
 import { toast } from 'react-toastify';
 import RangeSlider from './RangeSlider';
+import { getRandomCharacter } from '../helpers';
 
 function App() {
   const [password, setPassword] = useState('P4$5W0rD!');
   const [isEmpty, setIsEmpty] = useState(true);
-  const [length, setLength] = useState(10);
+  const [length, setLength] = useState(20);
   const [hasUpperCase, setHasUpperCase] = useState(false);
   const [hasLowerCase, setHasLowerCase] = useState(true);
   const [hasNumbers, setHasNumbers] = useState(false);
@@ -43,7 +44,7 @@ function App() {
 
   // CalcStrength
   useEffect(() => {
-    length >= 8 ? setIsLongEnough(true) : setIsLongEnough(false);
+    length >= 12 ? setIsLongEnough(true) : setIsLongEnough(false);
   }, [length]);
 
   // handleCopy
@@ -73,47 +74,37 @@ function App() {
   // Main password generation function
   const getPassword = () => {
     // Get password
-    const passwordArray = Array.from({ length }, () => {
-      const arrayFunctions = [
-        getRandomCharacter(
-          hasLowerCase ? characterSets.LettersLowerCase : ['']
-        ),
-        getRandomCharacter(
-          hasUpperCase ? characterSets.LettersUpperCase : ['']
-        ),
-        getRandomCharacter(hasNumbers ? characterSets.Numbers : ['']),
-        getRandomCharacter(hasSymbols ? characterSets.Symbols : ['']),
-      ];
-      let passwordInner = '';
+    const randomCharacters = Array.from({ length }, () => {
+      const characters: string[] = [];
 
-      for (let index = 0; index < arrayFunctions.length; index++) {
-        const element =
-          arrayFunctions[Math.floor(Math.random() * arrayFunctions.length)];
-        passwordInner += element;
+      if (hasLowerCase) {
+        characters.push(getRandomCharacter(characterSets.LettersLowerCase));
+      }
+      if (hasUpperCase) {
+        characters.push(getRandomCharacter(characterSets.LettersUpperCase));
+      }
+      if (hasNumbers) {
+        characters.push(getRandomCharacter(characterSets.Numbers));
+      }
+      if (hasSymbols) {
+        characters.push(getRandomCharacter(characterSets.Symbols));
       }
 
-      return passwordInner;
+      // Shifting randomly
+      for (let i = characters.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [characters[i], characters[j]] = [characters[j], characters[i]];
+      }
+
+      return characters.join('');
     });
 
-    const passwordString = passwordArray.join('');
-    const sliceStart = Math.floor(Math.random() * passwordArray.length);
-    const sliceEnd = sliceStart + passwordArray.length;
+    const newPassword = randomCharacters.join('');
+    const slicedPassword = newPassword.slice(0, randomCharacters.length);
 
-    setPassword(passwordString.slice(sliceStart, sliceEnd));
+    setPassword(slicedPassword);
     setIsEmpty(false);
   };
-
-  // Get random character
-  function getRandomCharacter(array?: string[]): string {
-    if (array !== undefined && array.length > 0) {
-      const arrayLength = array.length - 1;
-      const randomIndex = Math.floor(Math.random() * arrayLength);
-
-      return array[randomIndex];
-    } else {
-      return '';
-    }
-  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
@@ -127,7 +118,7 @@ function App() {
           <p
             className={`${
               isEmpty && 'opacity-25'
-            } overflow-auto text-2xl font-bold leading-none sm:text-[2rem]`}
+            } overflow-y-auto text-2xl font-bold leading-none sm:text-[2rem]`}
             id="password-result"
           >
             {password}

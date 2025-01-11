@@ -58,7 +58,7 @@ const RangeSlider: FC<RangeSliderProps> = ({ value, onChange }) => {
           id="length"
           value={value}
           min="6"
-          max="32"
+          max="20"
           onChange={onChange}
           style={{
             // Provide a fallback for the background style
