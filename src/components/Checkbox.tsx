@@ -10,7 +10,10 @@ type Checkbox = {
 const Checkbox: FC<Checkbox> = ({ value, onChange, label, id }) => {
   return (
     <div className="flex items-center gap-4">
-      <label htmlFor={id} className="relative flex items-center gap-2">
+      <label
+        htmlFor={id}
+        className="relative flex cursor-pointer items-center gap-2"
+      >
         <input
           type="checkbox"
           className="peer sr-only"
@@ -19,7 +22,7 @@ const Checkbox: FC<Checkbox> = ({ value, onChange, label, id }) => {
           checked={value}
           onChange={onChange}
         />
-        <div className="relative flex h-5 w-5 items-center justify-center border-2 border-dark-100 p-[2px] transition-colors peer-checked:border-accent-green peer-checked:bg-accent-green"></div>
+        <div className="relative flex h-5 w-5 items-center justify-center border-2 border-dark-100 p-[2px] transition-colors peer-checked:border-accent-green peer-checked:bg-accent-green peer-focus-within:bg-dark-200 peer-hover:bg-dark-200"></div>
         <img
           width={14}
           height={14}

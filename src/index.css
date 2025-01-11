@@ -136,4 +136,7 @@ input[type='range']::-ms-track {
   .toast-warning {
     @apply text-accent-yellow;
   }
+  .footer-link {
+    @apply p-4 underline opacity-60 transition-opacity hover:opacity-100;
+  }
 }
