@@ -4,14 +4,15 @@ import Button from './Button';
 import StrengthLevel from './StrengthLevel';
 import characterSets from '../constants/characterSets';
 import { toast } from 'react-toastify';
+import RangeSlider from './RangeSlider';
 
 function App() {
   const [password, setPassword] = useState('P4$5W0rD!');
   const [isEmpty, setIsEmpty] = useState(true);
   const [length, setLength] = useState(10);
-  const [hasUpperCase, setHasUpperCase] = useState(true);
+  const [hasUpperCase, setHasUpperCase] = useState(false);
   const [hasLowerCase, setHasLowerCase] = useState(true);
-  const [hasNumbers, setHasNumbers] = useState(true);
+  const [hasNumbers, setHasNumbers] = useState(false);
   const [hasSymbols, setHasSymbols] = useState(false);
   const [isLongEnough, setIsLongEnough] = useState(false);
 
@@ -142,35 +143,9 @@ function App() {
         {/* Settings Box */}
         <div className="flex flex-col gap-8 bg-dark-300 p-4 sm:p-8">
           {/* - Length */}
-          <label htmlFor="length">
-            <div className="mb-2 flex items-center justify-between">
-              <p>Character Length</p>
-              <p className="text-2xl font-bold leading-none text-accent-green sm:text-[2rem]">
-                {length}
-              </p>
-            </div>
-            <input
-              className="w-full"
-              type="range"
-              name="length"
-              id="length"
-              value={length}
-              min={6}
-              max={32}
-              onChange={handleLengthChange}
-            />
-          </label>
+          <RangeSlider value={length} onChange={handleLengthChange} />
           {/* - Checkboxes: */}
           <ul className="flex flex-col gap-5">
-            <li>
-              {/* -- Include Uppercase Letters: */}
-              <Checkbox
-                id="include-uppercase"
-                value={hasUpperCase}
-                onChange={handleUpperCaseChange}
-                label="Include Uppercase Letters"
-              />
-            </li>
             <li>
               {/* -- Include Lowercase Letters: */}
               <Checkbox
@@ -178,6 +153,15 @@ function App() {
                 value={hasLowerCase}
                 onChange={handleLowerCaseChange}
                 label="Include Lowercase Letters"
+              />
+            </li>
+            <li>
+              {/* -- Include Uppercase Letters: */}
+              <Checkbox
+                id="include-uppercase"
+                value={hasUpperCase}
+                onChange={handleUpperCaseChange}
+                label="Include Uppercase Letters"
               />
             </li>
             <li>
