@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import Checkbox from './Checkbox';
 import Button from './Button';
 import StrengthLevel from './StrengthLevel';
@@ -48,6 +48,46 @@ function App() {
     length >= 12 ? setIsLongEnough(true) : setIsLongEnough(false);
   }, [length]);
 
+  // Update password each time if the settings change
+  useEffect(() => {
+    if (hasLowerCase || hasUpperCase || hasNumbers || hasSymbols) {
+      const randomCharacters = Array.from({ length }, () => {
+        const characters: string[] = [];
+
+        if (hasLowerCase) {
+          characters.push(getRandomCharacter(characterSets.LettersLowerCase));
+        }
+        if (hasUpperCase) {
+          characters.push(getRandomCharacter(characterSets.LettersUpperCase));
+        }
+        if (hasNumbers) {
+          characters.push(getRandomCharacter(characterSets.Numbers));
+        }
+        if (hasSymbols) {
+          characters.push(getRandomCharacter(characterSets.Symbols));
+        }
+
+        // Shifting randomly
+        for (let i = characters.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [characters[i], characters[j]] = [characters[j], characters[i]];
+        }
+
+        return characters.join('');
+      });
+
+      const newPassword = randomCharacters.join('');
+      const slicedPassword = newPassword.slice(0, randomCharacters.length);
+
+      setPassword(slicedPassword);
+      setIsEmpty(false);
+    } else {
+      toast.error('Please, select at least one setting', {
+        className: 'toast-body toast-error',
+      });
+    }
+  }, [hasLowerCase, hasUpperCase, hasNumbers, hasSymbols, length]);
+
   // handleCopy
   const handleCopyClick = () => {
     if (navigator.clipboard && password) {
@@ -75,36 +115,42 @@ function App() {
   // Main password generation function
   const getPassword = () => {
     // Get password
-    const randomCharacters = Array.from({ length }, () => {
-      const characters: string[] = [];
+    if (hasLowerCase || hasUpperCase || hasNumbers || hasSymbols) {
+      const randomCharacters = Array.from({ length }, () => {
+        const characters: string[] = [];
 
-      if (hasLowerCase) {
-        characters.push(getRandomCharacter(characterSets.LettersLowerCase));
-      }
-      if (hasUpperCase) {
-        characters.push(getRandomCharacter(characterSets.LettersUpperCase));
-      }
-      if (hasNumbers) {
-        characters.push(getRandomCharacter(characterSets.Numbers));
-      }
-      if (hasSymbols) {
-        characters.push(getRandomCharacter(characterSets.Symbols));
-      }
+        if (hasLowerCase) {
+          characters.push(getRandomCharacter(characterSets.LettersLowerCase));
+        }
+        if (hasUpperCase) {
+          characters.push(getRandomCharacter(characterSets.LettersUpperCase));
+        }
+        if (hasNumbers) {
+          characters.push(getRandomCharacter(characterSets.Numbers));
+        }
+        if (hasSymbols) {
+          characters.push(getRandomCharacter(characterSets.Symbols));
+        }
 
-      // Shifting randomly
-      for (let i = characters.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [characters[i], characters[j]] = [characters[j], characters[i]];
-      }
+        // Shifting randomly
+        for (let i = characters.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [characters[i], characters[j]] = [characters[j], characters[i]];
+        }
 
-      return characters.join('');
-    });
+        return characters.join('');
+      });
 
-    const newPassword = randomCharacters.join('');
-    const slicedPassword = newPassword.slice(0, randomCharacters.length);
+      const newPassword = randomCharacters.join('');
+      const slicedPassword = newPassword.slice(0, randomCharacters.length);
 
-    setPassword(slicedPassword);
-    setIsEmpty(false);
+      setPassword(slicedPassword);
+      setIsEmpty(false);
+    } else {
+      toast.error('Please, select at least one setting', {
+        className: 'toast-body toast-error',
+      });
+    }
   };
 
   return (
@@ -180,11 +226,11 @@ function App() {
             <StrengthLevel strengthLevel={strengthLevel} />
 
             {/* - GENERATE BTN: */}
-            <Button
+            {/* <Button
               label="Generate"
               onClick={getPassword}
               icon="icon-arrow-right"
-            />
+            /> */}
           </div>
         </section>
       </main>
