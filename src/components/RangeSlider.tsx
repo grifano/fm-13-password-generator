@@ -52,6 +52,7 @@ const RangeSlider: FC<RangeSliderProps> = ({ value, onChange }) => {
       </div>
       <div>
         <input
+          className="outline-none focus:bg-accent-green focus:bg-opacity-20 focus:ring-2 focus:ring-accent-green"
           ref={rangeInputRef}
           type="range"
           name="length"

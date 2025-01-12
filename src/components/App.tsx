@@ -120,14 +120,14 @@ function App() {
             <p
               className={`${
                 isEmpty && 'opacity-25'
-              } overflow-y-auto text-2xl font-bold leading-none sm:text-[2rem]`}
+              } overflow-y-auto text-2xl font-bold leading-none outline-none sm:text-[2rem]`}
               id="password-result"
             >
               {password}
             </p>
             <button
               type="button"
-              className="shrink-0 p-4 sm:p-7 sm:transition-[filter] sm:hover:saturate-0"
+              className="shrink-0 p-4 outline-none focus-within:bg-dark-200 hover:bg-dark-200 sm:p-7 sm:transition-[filter] sm:hover:saturate-0"
               onClick={handleCopyClick}
             >
               <img src="/images/icon-copy.svg" alt="copy icon" />
